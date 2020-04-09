@@ -10,4 +10,5 @@ Welcome to the UPP User's Guide
    InputsOutputs
    Regridding
    BuildRunWithoutApp
+   AddNewVariable
    Acknowledgments
