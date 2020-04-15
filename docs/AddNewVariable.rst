@@ -20,64 +20,74 @@ The following outlines a brief description of the steps to be taken and
 are described in more detail with examples in the sections below.
 
 1.  Allocate the field: ALLOCATE.f
+
     *This file is the instantiation or allocation of the variable. Note that the variables
     are defined based on the parallel processing capability of UPP - use an example
     from the file.*
 
 2.  Deallocate the field: DEALLOCATE.f
+
     *All good programmers give back their resources when they are done. Please
     update this routine to return your resource to the system.*
 
 3.  Declare the new variable: VRBLS2D_mod.f, VRBLS3D_mod.f, or
     VRBLS4D_mod.f
+    
     *The variable is declared in one of these modules defining files depending on its
     dimension.*
 
 4.  Read model output: INITPOST.f
+
     *This file is used for reading the model output files.*
 
 5.  Add to appropriate routine for filling the new variable:
     e.g. SURFCE.f, MDLFLD.f, MDL2P.f, etc
+
     *This is the place that you will fill the array with the data and call gribit to output
     the field.*
 
 6.  Define table/grib2 parameters for grib2 output: params_grib2_tbl_new
+
     *This table contains the necessary parameter information for grib2 fields.*
 
 7.  Define the field for grib2 output: post_avlbflds.xml
+
     *This file is used for defining all available grib2 fields.*
 
 8.  Define control file entry for output: postcntrl.xml & postxconfig-NT.txt
+
     *These files are used for controlling which fields are output by UPP for grib2.*
 
-=================
-Example Procedure: Steps for adding the new variable ‘ACLHF’
-=================
-- This example illustrates a new variable from the WRF output that will be read into UPP
-  and directly output into the grib output files (i.e. no additional computations/calculations
-  are needed for the field).
-- Additions to each of the routines are highlighted in green.
-- Locations of routines are in /UPPV4.1/sorc/ncep_post.fd unless specified otherwise.
-- A sample wrfout file for the following procedures is available for download from:
-  - https://dtcenter.org/sites/default/files/community-code/AddNewVariableData.tar.gz
-  - This data is the 6-hr forecast of a WRF initialization of 2009-12-17_12:00:00
 
-    New variable to ad: ACLHF
+**Example Procedure: Steps for adding the new variable ‘ACLHF’**
 
-    float ACLHF(Time, south_north, west_east) ;
-          ACLHF:FieldType = 104 ;
-          ACLHF:MemoryOrder = "XY " ;
-          ACLHF:description = "ACCUMULATED UPWARD LATENT HEAT FLUX AT THE SURFACE" ;
-          ACLHF:units = "J m-2" ;
-          ACLHF:stagger = "" ;
-          ACLHF:coordinates = "XLONG XLAT" ;
+This example illustrates a new variable from the WRF output that will be read into UPP
+and directly output into the grib output files (i.e. no additional computations/calculations
+are needed for the field).
+
+Additions to each of the routines are highlighted in green.
+
+Locations of routines are in /UPPV4.1/sorc/ncep_post.fd unless specified otherwise.
+
+A sample wrfout file for the following procedures is available for download from:
+ - https://dtcenter.org/sites/default/files/community-code/AddNewVariableData.tar.gz
+ - This data is the 6-hr forecast of a WRF initialization of 2009-12-17_12:00:00
+
+New variable to add::
+ float ACLHF(Time, south_north, west_east) ;
+       ACLHF:FieldType = 104 ;
+       ACLHF:MemoryOrder = "XY" ;
+       ACLHF:description = "ACCUMULATED UPWARD LATENT HEAT FLUX AT THE SURFACE" ;
+       ACLHF:units = "J m-2" ;
+       ACLHF:stagger = "" ;
+       ACLHF:coordinates = "XLONG XLAT" ;
 
 1. Allocate the new variable in ALLOCATE_ALL.f
    This file is the instantiation or allocation of the variable. Note that the variables are defined
    based on the parallel processing capability of UPP - use an example from the file.
 
-   User Procedure:
-   - Add in VRBLS2D section as:
+   User Procedure::
+     Add in VRBLS2D section as::
      allocate(aclhf(im,jsta_2l:jend_2u))
 
 2. De-allocate the variable to give the resources back in DEALLOCATE.f
