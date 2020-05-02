@@ -126,12 +126,13 @@ are described in more detail with examples in the sections below.
    Hopefully a community area will be added in the future or a defined method to avoid overwriting
    others values. Right now using 900's for community contributions.
 
-   Example Entry::
+   Example Entry
 
-     ! HWRF addition for v_flux as pass through variable:
-       DATA IFILV(901),AVBL(901),IQ(901),IS(901),AVBLGRB2(901) &
-       &            /1,'MODEL SFC V WIND STR’,125,001,         &
-       &            'V_FLX ON surface’/
+       | ! HWRF addition for v_flux as pass through variable:
+
+       |   DATA IFILV(901),AVBL(901),IQ(901),IS(901),AVBLGRB2(901) &
+       |   &            /1,'MODEL SFC V WIND STR’,125,001,         &
+       |   &            'V_FLX ON surface’/
 
    Where:
      - **IFILV** Identifies field as MASS/VELOCITY point (e.g. 1)
@@ -206,8 +207,8 @@ are described in more detail with examples in the sections below.
     - Add in main section using the template variable as a guide.
     - Note that ID(02), which is the ID for table version number, is added and set to 130.
       This is the table that we are adding the new variable to.
-    - The block of code in blue is for metadata for the accumulation field being added
-      in this example and the user does not need to edit it and it is not always needed.
+    - The block of code within the '--' is for metadata for the accumulation field being added
+      in this example and is not needed unless an accumulated type field is being added.
       For example, for an instantaneous field, you would not need that block.
 
     ::
@@ -216,6 +217,7 @@ are described in more detail with examples in the sections below.
        IF (IGET(950).GT.0) THEN
          ID(1:25) = 0
          ID(02) = 130
+     !-----------------------------------------------------------
          ITPREC = NINT(TPREC)
       !mp
          IF(ITPREC .NE. 0) THEN
@@ -236,6 +238,7 @@ are described in more detail with examples in the sections below.
            IF(IFMIN .GE. 1)ID(18)=IFHR*60+IFMIN-IFINCR
          ENDIF
          IF (ID(18).LT.0) ID(18) = 0
+     !-----------------------------------------------------------
          if(grib=='grib1') then
            DO J=JSTA,JEND
              DO I=1,IM
@@ -258,7 +261,7 @@ are described in more detail with examples in the sections below.
          endif
        ENDIF
 
-7. For grib2 output, add the new variable to /UPPV4.1/parm/params_grib2_tbl_new.
+7. Add the new variable to /UPPV4.1/parm/params_grib2_tbl_new.
    For all current UPP output fields, this table lists, in order, the:
     - Discipline (http://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_table0-0.shtml)
     - Category (http://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_table4-1.shtml)

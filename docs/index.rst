@@ -7,8 +7,9 @@ Welcome to the UPP User's Guide
 
    Introduction
    CodeOverview
+   Installation
    InputsOutputs
+   Running
    Regridding
-   BuildRunWithoutApp
    AddNewVariable
    Acknowledgments
