@@ -120,7 +120,8 @@
                                             UBND,   VBND,   RHBND,     &
                                             WBND,   T7D,    Q7D,       &
                                             U7D,    V6D,    P7D,       &
-                                            ICINGFD,GTGFD,CATFD,MWTFD
+                                            QQRFD,                     &
+                                            ICINGFD,GTGFD,CATFD,MWTFD  
       real, dimension(:,:,:,:),allocatable :: AERFD
 
       real, dimension(:,:),allocatable ::   QM8510, RH4710, RH8498,    &
@@ -777,12 +778,14 @@
            (IGET(061).GT.0.or.IGET(577)>0).OR.                     &
            (IGET(601).GT.0.or.IGET(602)>0.or.IGET(603)>0).OR.      &
            (IGET(604).GT.0.or.IGET(605)>0).OR.                     &
-           (IGET(451).GT.0.or.IGET(578)>0).OR.IGET(580).GT.0 ) THEN
+           (IGET(451).GT.0.or.IGET(578)>0).OR.IGET(580).GT.0.OR.  &
+           (IGET(979)>0)) THEN
 
          ALLOCATE(T7D(IM,JSTA:JEND,NFD), Q7D(IM,JSTA:JEND,NFD),    &
                   U7D(IM,JSTA:JEND,NFD), V6D(IM,JSTA:JEND,NFD),    &
                   P7D(IM,JSTA:JEND,NFD), ICINGFD(IM,JSTA:JEND,NFD) &
-                 ,AERFD(IM,JSTA:JEND,NFD,NBIN_DU))
+                 ,AERFD(IM,JSTA:JEND,NFD,NBIN_DU),                 &
+                  QQRFD(IM,JSTA:JEND,NFD))
 
 !
 !     DETERMINE WHETHER TO DO MSL OR AGL FD LEVELS
@@ -840,12 +843,16 @@
 	   IF (IGET(605).GT.0) THEN
             IF (LVLS(IFD,IGET(605)).GT.1) ITYPEFDLVL(IFD)=2
            ENDIF
+           IF (IGET(979).GT.0) THEN
+            IF(LVLS(IFD,IGET(979))>0) ITYPEFDLVL(IFD)=2
+           ENDIF
+
 
          ENDDO
 !         print *,'call FDLVL with ITYPEFDLVL: ', ITYPEFDLVL,'for tmp,lvls=',LVLS(1:15,iget(59)), &
 !          'grib2tmp lvs=',LVLS(1:15,iget(586))
 
-         CALL FDLVL(ITYPEFDLVL,T7D,Q7D,U7D,V6D,P7D,ICINGFD,AERFD)
+         CALL FDLVL(ITYPEFDLVL,T7D,Q7D,U7D,V6D,P7D,ICINGFD,AERFD,QQRFD)
 !     
          DO 10 IFD = 1,NFD
             ID(1:25) = 0
@@ -1333,8 +1340,32 @@
                ENDIF
             ENDIF
 
+!           FD LEVEL RAIN WATER MIXING RATIO 
+            IF (IGET(979).GT.0) THEN
+               IF (LVLS(IFD,IGET(979)).GT.0) THEN
+!$omp parallel do private(i,j)
+                  DO J=JSTA,JEND
+                    DO I=1,IM
+                      GRID1(I,J) = QQRFD(I,J,IFD)
+                    ENDDO
+                  ENDDO
+                  if(grib == 'grib2') then
+                    cfld = cfld + 1
+                    fld_info(cfld)%ifld = IAVBLFLD(IGET(979))
+                    fld_info(cfld)%lvl  = LVLSXML(IFD,IGET(979))
+!$omp parallel do private(i,j,jj)
+                    do j=1,jend-jsta+1
+                      jj = jsta+j-1
+                      do i=1,im
+                        datapd(i,j,cfld) = GRID1(i,jj)
+                      enddo
+                    enddo
+                  endif
+               ENDIF
+            ENDIF
+
  10      CONTINUE
-         DEALLOCATE(T7D,Q7D,U7D,V6D,P7D,ICINGFD,AERFD)
+         DEALLOCATE(T7D,Q7D,U7D,V6D,P7D,ICINGFD,AERFD,QQRFD)
       ENDIF
 
 !

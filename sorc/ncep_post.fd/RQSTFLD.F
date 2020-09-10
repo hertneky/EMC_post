@@ -2657,6 +2657,10 @@
      &                      /1,'HIM-8 AHI CH16 NNADR',118,109,     & !table 130
      &                       'HIM-8 AHI CH16 NON-NADIR BRTEMP'/
 
+!-- RWMR at fd hgt (specified hgt level above ground)
+      DATA IFILV(979),AVBL(979),IQ(979),IS(979),AVBLGRB2(979)      &
+     &                      /1,'RWMR AT FDHEIGHTS HGT',170,105,    &
+     &                       'RWMR ON spec_hgt_lvl_above_grnd'/
 !end initialization
 !
    end module RQSTFLD_mod

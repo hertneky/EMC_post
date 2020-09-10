@@ -3426,5 +3426,12 @@
        <scale>3.0</scale>
        </param>
 
+       <param>
+       <shortname>RWMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>RWMR</pname>
+       <level>30. 50. 80. 100.</level>
+       <scale>4.0</scale>
+       </param>
+
     </paramset>
    </postxml>
