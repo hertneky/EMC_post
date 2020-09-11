@@ -1,6 +1,6 @@
 !      SUBROUTINE FDLVL(NFD,ITYPE,HTFD,TFD,QFD,UFD,VFD,PFD)
 !      SUBROUTINE FDLVL(ITYPE,TFD,QFD,UFD,VFD,PFD,ICINGFD)
-      SUBROUTINE FDLVL(ITYPE,TFD,QFD,UFD,VFD,PFD,ICINGFD,AERFD)
+      SUBROUTINE FDLVL(ITYPE,TFD,QFD,UFD,VFD,PFD,ICINGFD,AERFD,QQRFD)
 !$$$  SUBPROGRAM DOCUMENTATION BLOCK
 !                .      .    .     
 ! SUBPROGRAM:    FDLVL       COMPUTES FD LEVEL T, Q, U, V
@@ -71,7 +71,7 @@
 !     
 !
       use vrbls4d,    only: DUST
-      use vrbls3d,    only: ZMID, T, Q, PMID, ICING_GFIP, UH, VH
+      use vrbls3d,    only: ZMID, T, Q, PMID, ICING_GFIP, UH, VH, QQR
       use vrbls2d,    only: FIS
       use masks,      only: LMH
       use params_mod, only: GI, G
@@ -89,7 +89,7 @@
 !     
       integer,intent(in) ::  ITYPE(NFD)
 !jw      real,intent(in) :: HTFD(NFD)
-      real,dimension(IM,JSTA:JEND,NFD),intent(out) :: TFD,QFD,UFD,VFD,PFD,ICINGFD
+      real,dimension(IM,JSTA:JEND,NFD),intent(out) :: TFD,QFD,UFD,VFD,PFD,ICINGFD,QQRFD
       real,dimension(IM,JSTA:JEND,NFD,NBIN_DU),intent(out) :: AERFD
 !
       INTEGER LVL(NFD),LHL(NFD)
@@ -99,7 +99,7 @@
 !jw
       integer I,J,JVS,JVN,IE,IW,JN,JS,JNT,L,LLMH,IFD,N
       integer ISTART,ISTOP,JSTART,JSTOP
-      real htt,htsfc,httuv,dz,rdz,delt,delq,delu,delv,z1,z2,htabv,htabh,htsfcv
+      real htt,htsfc,httuv,dz,rdz,delt,delq,delu,delv,z1,z2,htabv,htabh,htsfcv,delqqr
 !
 !     SET FD LEVEL HEIGHTS IN METERS.
 !      DATA HTFD  / 30.E0,50.E0,80.E0,100.E0,305.E0,457.E0,610.E0,914.E0,1524.E0,  &
@@ -120,6 +120,7 @@
             VFD(I,J,IFD)     = SPVAL
             PFD(I,J,IFD)     = SPVAL
             ICINGFD(I,J,IFD) = SPVAL
+            QQRFD(I,J,IFD)   = SPVAL
           ENDDO
         ENDDO
       ENDDO
@@ -384,11 +385,13 @@
                  RDZ  = 1./DZ
                  DELT = T(I,J,L)-T(I,J,L+1)
                  DELQ = Q(I,J,L)-Q(I,J,L+1)
+                 DELQQR = QQR(I,J,L)-QQR(I,J,L+1)
                  TFD(I,J,IFD) = T(I,J,L) - DELT*RDZ*DZABH(IFD)
                  QFD(I,J,IFD) = Q(I,J,L) - DELQ*RDZ*DZABH(IFD)
                  PFD(I,J,IFD) = PMID(I,J,L) - (PMID(I,J,L)-PMID(I,J,L+1))*RDZ*DZABH(IFD)
                  ICINGFD(I,J,IFD) = ICING_GFIP(I,J,L) - &
                    (ICING_GFIP(I,J,L)-ICING_GFIP(I,J,L+1))*RDZ*DZABH(IFD)
+                 QQRFD(I,J,IFD) = QQR(I,J,L) - DELQQR*RDZ*DZABH(IFD)
                  if (gocart_on) then
                    DO N = 1, NBIN_DU
                      AERFD(I,J,IFD,N) = DUST(I,J,L,N) - &
@@ -400,6 +403,7 @@
                  QFD(I,J,IFD) = Q(I,J,L)
                  PFD(I,J,IFD) = PMID(I,J,L)
                  ICINGFD(I,J,IFD) = ICING_GFIP(I,J,L)
+                 QQRFD(I,J,IFD) = QQR(I,J,L)
                  if (gocart_on) then
                    DO N = 1, NBIN_DU
                      AERFD(I,J,IFD,N) = DUST(I,J,L,N)
