@@ -120,7 +120,8 @@
                                             UBND,   VBND,   RHBND,     &
                                             WBND,   T7D,    Q7D,       &
                                             U7D,    V6D,    P7D,       &
-                                            QQRFD,                     &
+                                            QQRFD,  QQSFD,  QQIFD      &
+                                            QQGFD,  QQWFD,             &
                                             ICINGFD,GTGFD,CATFD,MWTFD  
       real, dimension(:,:,:,:),allocatable :: AERFD
 
@@ -773,19 +774,22 @@
 !
 !     ***BLOCK 3-1:  FD LEVEL (selected) T, Q, U, AND V.
 !     
-      IF ( (IGET(059).GT.0.or.IGET(586)>0).OR.IGET(911)>0.OR.     &
+      IF ( (IGET(059).GT.0.or.IGET(586)>0).OR.IGET(911)>0.OR.      &
            (IGET(060).GT.0.or.IGET(576)>0).OR.                     &
            (IGET(061).GT.0.or.IGET(577)>0).OR.                     &
            (IGET(601).GT.0.or.IGET(602)>0.or.IGET(603)>0).OR.      &
            (IGET(604).GT.0.or.IGET(605)>0).OR.                     &
-           (IGET(451).GT.0.or.IGET(578)>0).OR.IGET(580).GT.0.OR.  &
-           (IGET(979)>0)) THEN
+           (IGET(451).GT.0.or.IGET(578)>0).OR.IGET(580).GT.0.OR.   &
+           (IGET(979)>0).OR.(IGET(980)>0).OR.(IGET(981)>0).OR.     &
+           (IGET(982)>0).OR.(IGET(983)>0)) THEN
 
          ALLOCATE(T7D(IM,JSTA:JEND,NFD), Q7D(IM,JSTA:JEND,NFD),    &
                   U7D(IM,JSTA:JEND,NFD), V6D(IM,JSTA:JEND,NFD),    &
                   P7D(IM,JSTA:JEND,NFD), ICINGFD(IM,JSTA:JEND,NFD) &
                  ,AERFD(IM,JSTA:JEND,NFD,NBIN_DU),                 &
-                  QQRFD(IM,JSTA:JEND,NFD))
+                  QQRFD(IM,JSTA:JEND,NFD),QQSFD(IM,JSTA:JEND,NFD), &
+                  QQIFD(IM,JSTA:JEND,NFD),QQGFD(IM,JSTA:JEND,NFD), &
+                  QQWFD(IM,JSTA:JEND,NFD))
 
 !
 !     DETERMINE WHETHER TO DO MSL OR AGL FD LEVELS
@@ -846,13 +850,24 @@
            IF (IGET(979).GT.0) THEN
             IF(LVLS(IFD,IGET(979))>0) ITYPEFDLVL(IFD)=2
            ENDIF
-
+           IF (IGET(980).GT.0) THEN
+            IF(LVLS(IFD,IGET(980))>0) ITYPEFDLVL(IFD)=2
+           ENDIF
+           IF (IGET(981).GT.0) THEN
+            IF(LVLS(IFD,IGET(981))>0) ITYPEFDLVL(IFD)=2
+           ENDIF
+           IF (IGET(982).GT.0) THEN
+            IF(LVLS(IFD,IGET(982))>0) ITYPEFDLVL(IFD)=2
+           ENDIF
+           IF (IGET(983).GT.0) THEN
+            IF(LVLS(IFD,IGET(983))>0) ITYPEFDLVL(IFD)=2
+           ENDIF
 
          ENDDO
 !         print *,'call FDLVL with ITYPEFDLVL: ', ITYPEFDLVL,'for tmp,lvls=',LVLS(1:15,iget(59)), &
 !          'grib2tmp lvs=',LVLS(1:15,iget(586))
 
-         CALL FDLVL(ITYPEFDLVL,T7D,Q7D,U7D,V6D,P7D,ICINGFD,AERFD,QQRFD)
+         CALL FDLVL(ITYPEFDLVL,T7D,Q7D,U7D,V6D,P7D,ICINGFD,AERFD,QQRFD,QQSFD,QQIFD,QQGFD,QQWFD)
 !     
          DO 10 IFD = 1,NFD
             ID(1:25) = 0
@@ -1364,8 +1379,104 @@
                ENDIF
             ENDIF
 
+!           FD LEVEL SNOW MIXING RATIO 
+            IF (IGET(980).GT.0) THEN
+               IF (LVLS(IFD,IGET(980)).GT.0) THEN
+!$omp parallel do private(i,j)
+                  DO J=JSTA,JEND
+                    DO I=1,IM
+                      GRID1(I,J) = QQSFD(I,J,IFD)
+                    ENDDO
+                  ENDDO
+                  if(grib == 'grib2') then
+                    cfld = cfld + 1
+                    fld_info(cfld)%ifld = IAVBLFLD(IGET(980))
+                    fld_info(cfld)%lvl  = LVLSXML(IFD,IGET(980))
+!$omp parallel do private(i,j,jj)
+                    do j=1,jend-jsta+1
+                      jj = jsta+j-1
+                      do i=1,im
+                        datapd(i,j,cfld) = GRID1(i,jj)
+                      enddo
+                    enddo
+                  endif
+               ENDIF
+            ENDIF
+
+!           FD LEVEL ICE MIXING RATIO 
+            IF (IGET(981).GT.0) THEN
+               IF (LVLS(IFD,IGET(981)).GT.0) THEN
+!$omp parallel do private(i,j)
+                  DO J=JSTA,JEND
+                    DO I=1,IM
+                      GRID1(I,J) = QQIFD(I,J,IFD)
+                    ENDDO
+                  ENDDO
+                  if(grib == 'grib2') then
+                    cfld = cfld + 1
+                    fld_info(cfld)%ifld = IAVBLFLD(IGET(981))
+                    fld_info(cfld)%lvl  = LVLSXML(IFD,IGET(981))
+!$omp parallel do private(i,j,jj)
+                    do j=1,jend-jsta+1
+                      jj = jsta+j-1
+                      do i=1,im
+                        datapd(i,j,cfld) = GRID1(i,jj)
+                      enddo
+                    enddo
+                  endif
+               ENDIF
+            ENDIF
+
+!           FD LEVEL GRAUPEL MIXING RATIO 
+            IF (IGET(982).GT.0) THEN
+               IF (LVLS(IFD,IGET(982)).GT.0) THEN
+!$omp parallel do private(i,j)
+                  DO J=JSTA,JEND
+                    DO I=1,IM
+                      GRID1(I,J) = QQGFD(I,J,IFD)
+                    ENDDO
+                  ENDDO
+                  if(grib == 'grib2') then
+                    cfld = cfld + 1
+                    fld_info(cfld)%ifld = IAVBLFLD(IGET(982))
+                    fld_info(cfld)%lvl  = LVLSXML(IFD,IGET(982))
+!$omp parallel do private(i,j,jj)
+                    do j=1,jend-jsta+1
+                      jj = jsta+j-1
+                      do i=1,im
+                        datapd(i,j,cfld) = GRID1(i,jj)
+                      enddo
+                    enddo
+                  endif
+               ENDIF
+            ENDIF
+
+!           FD LEVEL CLOUD WATER MIXING RATIO 
+            IF (IGET(983).GT.0) THEN
+               IF (LVLS(IFD,IGET(983)).GT.0) THEN
+!$omp parallel do private(i,j)
+                  DO J=JSTA,JEND
+                    DO I=1,IM
+                      GRID1(I,J) = QQWFD(I,J,IFD)
+                    ENDDO
+                  ENDDO
+                  if(grib == 'grib2') then
+                    cfld = cfld + 1
+                    fld_info(cfld)%ifld = IAVBLFLD(IGET(983))
+                    fld_info(cfld)%lvl  = LVLSXML(IFD,IGET(983))
+!$omp parallel do private(i,j,jj)
+                    do j=1,jend-jsta+1
+                      jj = jsta+j-1
+                      do i=1,im
+                        datapd(i,j,cfld) = GRID1(i,jj)
+                      enddo
+                    enddo
+                  endif
+               ENDIF
+            ENDIF
+
  10      CONTINUE
-         DEALLOCATE(T7D,Q7D,U7D,V6D,P7D,ICINGFD,AERFD,QQRFD)
+         DEALLOCATE(T7D,Q7D,U7D,V6D,P7D,ICINGFD,AERFD,QQRFD,QQSFD,QQIFD,QQGFD,QQWFD)
       ENDIF
 
 !

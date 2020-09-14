@@ -2661,6 +2661,22 @@
       DATA IFILV(979),AVBL(979),IQ(979),IS(979),AVBLGRB2(979)      &
      &                      /1,'RWMR AT FDHEIGHTS HGT',170,105,    &
      &                       'RWMR ON spec_hgt_lvl_above_grnd'/
+!-- SNMR at fd hgt (specified hgt level above ground)
+      DATA IFILV(980),AVBL(980),IQ(980),IS(980),AVBLGRB2(980)      &
+     &                      /1,'SNMR AT FDHEIGHTS HGT',171,105,    &
+     &                       'SNMR ON spec_hgt_lvl_above_grnd'/
+!-- ICMR at fd hgt (specified hgt level above ground)
+      DATA IFILV(981),AVBL(981),IQ(981),IS(981),AVBLGRB2(981)      &
+     &                      /1,'ICMR AT FDHEIGHTS HGT',178,105,    &
+     &                       'ICMR ON spec_hgt_lvl_above_grnd'/
+!-- GRLE at fd hgt (specified hgt level above ground)
+      DATA IFILV(982),AVBL(982),IQ(982),IS(982),AVBLGRB2(982)      &
+     &                      /1,'GRLE AT FDHEIGHTS HGT',179,105,    &
+     &                       'GRLE ON spec_hgt_lvl_above_grnd'/
+!-- CLWMR at fd hgt (specified hgt level above ground)
+      DATA IFILV(983),AVBL(983),IQ(983),IS(983),AVBLGRB2(983)      &
+     &                      /1,'CLWMR AT FDHEIGHTS HGT',153,105,   &
+     &                       'CLWMR ON spec_hgt_lvl_above_grnd'/
 !end initialization
 !
    end module RQSTFLD_mod

@@ -3433,5 +3433,33 @@
        <scale>4.0</scale>
        </param>
 
+       <param>
+       <shortname>SNMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>SNMR</pname>
+       <level>30. 50. 80. 100.</level>
+       <scale>4.0</scale>
+       </param>
+
+       <param>
+       <shortname>ICMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>ICMR</pname>
+       <level>30. 50. 80. 100.</level>
+       <scale>4.0</scale>
+       </param>
+
+       <param>
+       <shortname>GRLE_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>GRLE</pname>
+       <level>30. 50. 80. 100.</level>
+       <scale>4.0</scale>
+       </param>
+
+       <param>
+       <shortname>CLWMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>CLWMR</pname>
+       <level>30. 50. 80. 100.</level>
+       <scale>4.0</scale>
+       </param>
+
     </paramset>
    </postxml>

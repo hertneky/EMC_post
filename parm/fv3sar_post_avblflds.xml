@@ -5685,6 +5685,38 @@
        <fixed_sfc1_type>spec_hgt_lvl_above_grnd</fixed_sfc1_type>
        <scale>3.0</scale>
     </param>
+    
+    <param>
+       <post_avblfldidx>980</post_avblfldidx>
+       <shortname>SNMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>SNMR</pname>
+       <fixed_sfc1_type>spec_hgt_lvl_above_grnd</fixed_sfc1_type>
+       <scale>3.0</scale>
+    </param>
+
+    <param>
+       <post_avblfldidx>981</post_avblfldidx>
+       <shortname>ICMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>ICMR</pname>
+       <fixed_sfc1_type>spec_hgt_lvl_above_grnd</fixed_sfc1_type>
+       <scale>3.0</scale>
+    </param>
+
+    <param>
+       <post_avblfldidx>982</post_avblfldidx>
+       <shortname>GRLE_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>GRLE</pname>
+       <fixed_sfc1_type>spec_hgt_lvl_above_grnd</fixed_sfc1_type>
+       <scale>3.0</scale>
+    </param>
+
+    <param>
+       <post_avblfldidx>983</post_avblfldidx>
+       <shortname>CLWMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>CLWMR</pname>
+       <fixed_sfc1_type>spec_hgt_lvl_above_grnd</fixed_sfc1_type>
+       <scale>3.0</scale>
+    </param>
 
   </post_avblflds>
 </postxml>
