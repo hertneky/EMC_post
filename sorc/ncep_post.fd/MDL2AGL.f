@@ -56,7 +56,8 @@
       use params_mod, only: dbzmin, small, eps, rd
       use ctlblk_mod, only: spval, lm, modelname, grib, cfld, fld_info, datapd,&
                             ifhr, global, jsta_m, jend_m, mpi_comm_comp,       &
-                            jsta_2l, jend_2u, im, jm, jsta, jend, imp_physics
+                            jsta_2l, jend_2u, im, jm, jsta, jend, imp_physics, &
+                            nfd, htfd
       use rqstfld_mod,  only: iget, lvls, iavblfld, lvlsxml, id
       use gridspec_mod, only: gridtype
 !- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -133,7 +134,7 @@
 !***  INTERPOLATION ABOVE GROUND NOW.
 !***
 !
-        DO 310 LP=1,LAGL
+        DO 310 LP=1,NFD
           iget1 = -1 ; iget2 = -1 ; iget3 = -1 ; iget4 = -1
           if (iget(253) > 0) iget1 = LVLS(LP,IGET(253))
           if (iget(279) > 0) iget2 = LVLS(LP,IGET(279))
@@ -158,7 +159,7 @@
               NL1X(I,J) = LLMH+1
               DO L=LLMH,2,-1
                 ZDUM = ZMID(I,J,L)-ZINT(I,J,LLMH+1)
-                IF(ZDUM >= ZAGL(LP)) THEN
+                IF(ZDUM >= NINT(HTFD(LP))) THEN
                   NL1X(I,J) = L+1
                   exit
                 ENDIF
@@ -169,7 +170,7 @@
 !  WE WILL NOT CONSIDER IT UNDERGROUND AND THE INTERPOLATION
 !  WILL EXTRAPOLATE TO THAT POINT
 !
-              IF(NL1X(I,J) == (LLMH+1) .AND. ZAGL(LP) > 0.) THEN
+              IF(NL1X(I,J) == (LLMH+1) .AND. NINT(HTFD(LP)) > 0.) THEN
                 NL1X(I,J) = LM
               ENDIF
 !
@@ -208,7 +209,7 @@
 !
 !              FACT=(ALSL(LP)-ALOG(PMID(I,J,LL)))/
 !     &             (ALOG(PMID(I,J,LL))-ALOG(PMID(I,J,LL-1)))
-               ZDUM=ZAGL(LP)+ZINT(I,J,NINT(LMH(I,J))+1)
+               ZDUM=NINT(HTFD(LP))+ZINT(I,J,NINT(LMH(I,J))+1)
                FACT=(ZDUM-ZMID(I,J,LL))/(ZMID(I,J,LL)-ZMID(I,J,LL-1))
 !	  
 ! KRF: Use arw/nmm output if thompson
@@ -284,7 +285,7 @@
              endif
              ID(1:25)=0
              ID(02)=129
-             ID(11) = NINT(ZAGL(LP))
+             ID(11) = NINT(HTFD(LP))
              if(grib=='grib1') then
                CALL GRIBIT(IGET(253),LP,GRID1,IM,JM)
              elseif(grib=='grib2') then
@@ -303,7 +304,7 @@
              ENDDO
              ID(1:25)=0
              ID(02)=129
-             ID(11) = NINT(ZAGL(LP))
+             ID(11) = NINT(HTFD(LP))
              if(grib=='grib1') then
                CALL GRIBIT(IGET(279),LP,GRID1,IM,JM)
              elseif(grib=='grib2') then
@@ -322,7 +323,7 @@
              ENDDO
              ID(1:25)=0
              ID(02)=129
-             ID(11) = NINT(ZAGL(LP))
+             ID(11) = NINT(HTFD(LP))
              if(grib=='grib1') then
                CALL GRIBIT(IGET(280),LP,GRID1,IM,JM)
              elseif(grib=='grib2') then
@@ -341,7 +342,7 @@
              ENDDO
              ID(1:25)=0
              ID(02)=129
-             ID(11) = NINT(ZAGL(LP))
+             ID(11) = NINT(HTFD(LP))
              if(grib=='grib1') then
                CALL GRIBIT(IGET(281),LP,GRID1,IM,JM)
              elseif(grib=='grib2') then

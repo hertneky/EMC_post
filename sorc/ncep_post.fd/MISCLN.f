@@ -120,7 +120,7 @@
                                             UBND,   VBND,   RHBND,     &
                                             WBND,   T7D,    Q7D,       &
                                             U7D,    V6D,    P7D,       &
-                                            QQRFD,  QQSFD,  QQIFD      &
+                                            QQRFD,  QQSFD,  QQIFD,     &
                                             QQGFD,  QQWFD,             &
                                             ICINGFD,GTGFD,CATFD,MWTFD  
       real, dimension(:,:,:,:),allocatable :: AERFD
@@ -781,7 +781,7 @@
            (IGET(604).GT.0.or.IGET(605)>0).OR.                     &
            (IGET(451).GT.0.or.IGET(578)>0).OR.IGET(580).GT.0.OR.   &
            (IGET(979)>0).OR.(IGET(980)>0).OR.(IGET(981)>0).OR.     &
-           (IGET(982)>0).OR.(IGET(983)>0)) THEN
+           (IGET(982)>0).OR.(IGET(983)>0).OR.(IGET(984)>0)) THEN
 
          ALLOCATE(T7D(IM,JSTA:JEND,NFD), Q7D(IM,JSTA:JEND,NFD),    &
                   U7D(IM,JSTA:JEND,NFD), V6D(IM,JSTA:JEND,NFD),    &
@@ -862,6 +862,9 @@
            IF (IGET(983).GT.0) THEN
             IF(LVLS(IFD,IGET(983))>0) ITYPEFDLVL(IFD)=2
            ENDIF
+           IF (IGET(984).GT.0) THEN
+            IF(LVLS(IFD,IGET(984))>0) ITYPEFDLVL(IFD)=2
+           ENDIF
 
          ENDDO
 !         print *,'call FDLVL with ITYPEFDLVL: ', ITYPEFDLVL,'for tmp,lvls=',LVLS(1:15,iget(59)), &
@@ -931,28 +934,53 @@
             ENDIF
 
 !           FD LEVEL VIRTUAL TEMPERATURE.
-            IF (IGET(911).GT.0) THEN
-              IF (LVLS(IFD,IGET(911)).GT.0) THEN
+            iget1 = IGET(911)
+            iget2 = IGET(984)
+            if (iget1 > 0) then
+              work1 = LVLS(IFD,iget1)
+            else
+              work1 = 0.0
+            endif
+            if (iget2 > 0) then
+              work2 = LVLS(IFD,iget2)
+            else
+              work2 = 0.0
+            endif
+            IF (IGET1 > 0 .or. IGET2 > 0) THEN
+              IF (work1 > 0 .or. work2 > 0) THEN
                DO J=JSTA,JEND
-               DO I=1,IM
-                 if ( T7D(I,J,IFD) > 600 ) then
-                 GRID1(I,J)=SPVAL
-                 else
-                 GRID1(I,J)=T7D(I,J,IFD)*(1.+0.608*Q7D(I,J,IFD))
-                 endif
-                 !print *, "grid value ",T7D(I,J,IFD),Q7D(I,J,IFD),T7D(I,J,IFD)*(1.+0.608*Q7D(I,J,IFD)),GRID1(I,J)
+                 DO I=1,IM
+                   if ( T7D(I,J,IFD) > 600 ) then
+                     GRID1(I,J)=SPVAL
+                   else
+                     GRID1(I,J)=T7D(I,J,IFD)*(1.+0.608*Q7D(I,J,IFD))
+                   endif
+                 ENDDO
                ENDDO
-               ENDDO
-               IF(LVLS(IFD,IGET(911)).GT.0) then
+               IF(work1 > 0) then
                  if(grib=='grib1') then
-                   CALL GRIBIT(IGET(911),LVLS(IFD,IGET(911)),GRID1,IM,JM)
+                   CALL GRIBIT(IGET1,work1,GRID1,IM,JM)
                  elseif(grib=='grib2') then
                    cfld=cfld+1
-                   fld_info(cfld)%ifld=IAVBLFLD(IGET(911))
-                   fld_info(cfld)%lvl=LVLSXML(IFD,IGET(911))
+                   fld_info(cfld)%ifld=IAVBLFLD(IGET1)
+                   fld_info(cfld)%lvl=LVLSXML(IFD,IGET1)
                    datapd(1:im,1:jend-jsta+1,cfld)=GRID1(1:im,jsta:jend)
                  endif
                ENDIF
+                IF (work2 > 0) THEN
+                  if(grib == 'grib2') then
+                    cfld = cfld + 1
+                    fld_info(cfld)%ifld = IAVBLFLD(IGET2)
+                    fld_info(cfld)%lvl  = LVLSXML(IFD,IGET2)
+!$omp parallel do private(i,j,jj)
+                    do j=1,jend-jsta+1
+                      jj = jsta+j-1
+                      do i=1,im
+                        datapd(i,j,cfld) = GRID1(i,jj)
+                      enddo
+                    enddo
+                  endif
+                ENDIF
               ENDIF
             ENDIF
 

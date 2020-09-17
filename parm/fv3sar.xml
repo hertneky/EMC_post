@@ -1188,18 +1188,11 @@
        </param>
 
        <param>
-       <shortname>TMP_ON_SPEC_ALT_ABOVE_MEAN_SEA_LVL</shortname>
-       <pname>TMP</pname>
-       <level>305. 457. 610. 914. 1524. 1829. 2134. 2743. 3658. 4572.</level>
-       <scale>3.0</scale>
-       </param>
-
-       <param>
        <shortname>TMP_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
        <pname>TMP</pname>
-       <level>30. 50. 80. 100.</level>
+       <level>500. 1000. 1500. 2000. 2500. 3000. 3500. 4000. 4500. 5000. 5500. 6000. 6500. 7000. 7500. 8000. 8500. 9000. 9500. 10000.</level>
        <scale>3.0</scale>
-        </param>
+       </param>
 
        <param>
        <shortname>UGRD_ON_SPEC_ALT_ABOVE_MEAN_SEA_LVL</shortname>
@@ -1228,13 +1221,6 @@
        <level>30. 50. 80. 100.</level>
        <scale>4.0</scale>
         </param>
-
-       <param>
-       <shortname>SPFH_ON_SPEC_ALT_ABOVE_MEAN_SEA_LVL</shortname>
-       <pname>SPFH</pname>
-       <level>305.</level>
-        <scale>5.0</scale>
-       </param>
 
        <param>
        <shortname>SPFH_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
@@ -1448,7 +1434,7 @@
        <shortname>REFD_ON_SPEC_HGT_LVL_ABOVE_GRND</shortname>
        <pname>REFD</pname>
        <table_info>NCEP</table_info>
-       <level>4000. 1000.</level>
+       <level>500. 1000. 1500. 2000. 2500. 3000. 3500. 4000. 4500. 5000. 5500. 6000. 6500. 7000. 7500. 8000. 8500. 9000. 9500. 10000.</level>
        <scale>4.0</scale>
        </param>
 
@@ -3429,36 +3415,50 @@
        <param>
        <shortname>RWMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
        <pname>RWMR</pname>
-       <level>30. 50. 80. 100.</level>
+       <level>500. 1000. 1500. 2000. 2500. 3000. 3500. 4000. 4500. 5000. 5500. 6000. 6500. 7000. 7500. 8000. 8500. 9000. 9500. 10000.</level>
        <scale>4.0</scale>
        </param>
 
        <param>
        <shortname>SNMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
        <pname>SNMR</pname>
-       <level>30. 50. 80. 100.</level>
+       <level>500. 1000. 1500. 2000. 2500. 3000. 3500. 4000. 4500. 5000. 5500. 6000. 6500. 7000. 7500. 8000. 8500. 9000. 9500. 10000.</level>
        <scale>4.0</scale>
        </param>
 
        <param>
        <shortname>ICMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
        <pname>ICMR</pname>
-       <level>30. 50. 80. 100.</level>
+       <level>500. 1000. 1500. 2000. 2500. 3000. 3500. 4000. 4500. 5000. 5500. 6000. 6500. 7000. 7500. 8000. 8500. 9000. 9500. 10000.</level>
        <scale>4.0</scale>
        </param>
 
        <param>
        <shortname>GRLE_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
        <pname>GRLE</pname>
-       <level>30. 50. 80. 100.</level>
+       <level>500. 1000. 1500. 2000. 2500. 3000. 3500. 4000. 4500. 5000. 5500. 6000. 6500. 7000. 7500. 8000. 8500. 9000. 9500. 10000.</level>
        <scale>4.0</scale>
        </param>
 
        <param>
        <shortname>CLWMR_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
        <pname>CLWMR</pname>
-       <level>30. 50. 80. 100.</level>
+       <level>500. 1000. 1500. 2000. 2500. 3000. 3500. 4000. 4500. 5000. 5500. 6000. 6500. 7000. 7500. 8000. 8500. 9000. 9500. 10000.</level>
        <scale>4.0</scale>
+       </param>
+
+       <param>
+       <shortname>VTMP_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>VTMP</pname>
+       <level>500. 1000. 1500. 2000. 2500. 3000. 3500. 4000. 4500. 5000. 5500. 6000. 6500. 7000. 7500. 8000. 8500. 9000. 9500. 10000.</level>
+       <scale>4.0</scale>
+       </param>
+
+       <param>
+       <shortname>PRES_ON_SPEC_HGT_LVL_ABOVE_GRND_FDHGT</shortname>
+       <pname>PRES</pname>
+       <level>500. 1000. 1500. 2000. 2500. 3000. 3500. 4000. 4500. 5000. 5500. 6000. 6500. 7000. 7500. 8000. 8500. 9000. 9500. 10000.</level>
+       <scale>3.0</scale>
        </param>
 
     </paramset>

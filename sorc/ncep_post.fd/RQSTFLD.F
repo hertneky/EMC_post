@@ -2677,6 +2677,10 @@
       DATA IFILV(983),AVBL(983),IQ(983),IS(983),AVBLGRB2(983)      &
      &                      /1,'CLWMR AT FDHEIGHTS HGT',153,105,   &
      &                       'CLWMR ON spec_hgt_lvl_above_grnd'/
+!-- VTMP at fd hgt (specified hgt level above ground)
+      DATA IFILV(984),AVBL(984),IQ(984),IS(984),AVBLGRB2(984)      &
+     &                      /1,'VTEMP AT FDHEIGHTS HGT',12,105,    &
+     &                       'VTMP ON spec_hgt_lvl_above_grnd'/
 !end initialization
 !
    end module RQSTFLD_mod

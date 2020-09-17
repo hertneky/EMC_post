@@ -22,7 +22,7 @@
   end type
   integer, parameter :: komax=70
   integer, parameter :: LSMDEF=46             ! default number of p levels
-  integer,PARAMETER  :: NFD=18,NBND=6
+  integer,PARAMETER  :: NFD=57,NBND=6
   REAL,  PARAMETER   :: QMIN = 1.E-15
 !
   integer :: novegtype ! max number of veg type
@@ -90,9 +90,14 @@
   integer, parameter :: nbin_sm = 1             ! smoke
 !
 !     SET FD LEVEL HEIGHTS IN GEOPOTENTAL METERS.
-      DATA HTFD  / 20.E0,30.E0,40.E0,50.E0,80.E0,100.E0,305.E0,457.E0,610.E0,   &
-           914.E0,1524.E0,1829.E0,2134.E0,2743.E0,3658.E0,4572.E0, &
-	   6000.E0,7010.E0/
+      DATA HTFD  / 20.E0,30.E0,40.E0,50.E0,80.E0,100.E0,305.E0,457.E0,500.E0, &
+           610.E0,914.E0,1000.E0,1500.E0,1524.E0,1829.E0,2000.E0,2134.E0,     &
+           2500.E0,2743.E0,3000.E0,3500.E0,3658.E0,4000.E0,4500.E0,4572.E0,   &
+           5000.E0,5500.E0,6000.E0,6500.E0,7000.E0,7010.E0,7500.E0,8000.E0,   &
+           8500.E0,9000.E0,9500.E0,10000.E0,10500.E0,11000.E0,11500.E0,       &
+           12000.E0,12500.E0,13000.E0,13500.E0,14000.E0,14500.E0,15000.E0,    &
+           15500.E0,16000.E0,16500.E0,17000.E0,17500.E0,18000.E0,18500.E0,    &
+           19000.E0,19500.E0,20000.E0/
 !
 !     SET MIDPOINT "SIGMA" VALUES FOR ETA BOUNDARY LAYERS.
       DATA SIGBND / 0.985,0.955,0.925,0.895,0.865,0.835 /
