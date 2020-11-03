@@ -85,7 +85,7 @@ export FIXCRTM=${CRTM_FIX:-${HOMECRTM}/fix}
 #### export FIXCRTM=${FIXCRTM:-$HOMECRTM/sorc/fix}
 
 export HOMEgfs=${HOMEgfs:-${NWROOT}/gfs.${gfs_ver}}
-export EXECgfs=${EXECgfs:-$HOMEgfs/bin}
+export EXECgfs=${EXECgfs:-$HOMEgfs/exec}
 export FIXgfs=${FIXgfs:-$HOMEgfs/fix}
 export USHgfs=${USHgfs:-$HOMEgfs/ush}
 export SCRgfs=${SCRgfs:-$HOMEgfs/scripts}

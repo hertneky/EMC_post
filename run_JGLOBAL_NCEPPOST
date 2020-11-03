@@ -100,7 +100,7 @@ export FIXgfs=/gpfs/hps3/emc/global/noscrub/emc.glopara/git/fv3gfs/master/global
 export nemsioget=/gpfs/hps3/emc/global/noscrub/emc.glopara/git/fv3gfs/master/global_shared.v15.0.0/exec/nemsio_get
 #export POSTGRB2TBL=${HOMEglobal}/parm/params_grib2_tbl_new
 export POSTGRB2TBL=/gpfs/hps/nco/ops/nwprod/lib/g2tmpl/v1.5.0/src/params_grib2_tbl_new
-export POSTGPEXEC=${HOMEgfs}/bin/ncep_post
+export POSTGPEXEC=${HOMEgfs}/exec/ncep_post
 export PARMpost=${HOMEgfs}/parm
 
 #export PGBF=NO

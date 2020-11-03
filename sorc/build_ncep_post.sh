@@ -119,9 +119,9 @@ cd ncep_post.fd
 make -f makefile_module clean
 make -f makefile_module
 
-if [ ! -d "../../bin" ] ; then
-  mkdir -p ../../bin
+if [ ! -d "../../exec" ] ; then
+  mkdir -p ../../exec
 fi
-cp ncep_post ../../bin/
+cp ncep_post ../../exec/
 
 exit 0
