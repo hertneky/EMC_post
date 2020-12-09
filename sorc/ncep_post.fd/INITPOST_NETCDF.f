@@ -1678,6 +1678,8 @@
       
 ! inst convective cloud fraction using nemsio
       VarName='tcdccnvcl'
+      call read_netcdf_2d_scatter(me,ncid2d,1,im,jm,jsta,jsta_2l &
+       ,jend_2u,MPI_COMM_COMP,icnt,idsp,spval,VarName,cnvcfr)
 !     where(cnvcfr /= spval)cnvcfr=cnvcfr/100. ! convert to fraction
 !$omp parallel do private(i,j)
       do j=jsta,jend
@@ -2418,8 +2420,9 @@
       
 ! retrieve boundary layer cloud cover using nemsio
       VarName='tcdc_avebndcl'
-      VcoordName='bndary-layer cld' 
-      l=1
+      VcoordName='bndary-layer cld'
+      call read_netcdf_2d_scatter(me,ncid2d,1,im,jm,jsta,jsta_2l &
+       ,jend_2u,MPI_COMM_COMP,icnt,idsp,spval,VarName,pblcfr)
 !     if(debugprint)print*,'sample l',VcoordName,VarName,' = ', 1,pblcfr(isa,jsa)
 !     where (pblcfr /= spval)pblcfr=pblcfr/100. ! convert to fraction
 !$omp parallel do private(i,j)

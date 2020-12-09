@@ -1387,7 +1387,7 @@
 !     TIME AVERAGED TOTAL CLOUD FRACTION.
       IF (IGET(144) > 0) THEN
 !        GRID1=SPVAL
-        IF(MODELNAME == 'GFS')THEN
+        IF(MODELNAME == 'GFS' .OR. MODELNAME == 'FV3R')THEN
 !$omp parallel do private(i,j)
           DO J=JSTA,JEND
             DO I=1,IM
