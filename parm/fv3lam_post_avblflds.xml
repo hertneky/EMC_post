@@ -4543,6 +4543,14 @@
     </param>
 
     <param>
+       <post_avblfldidx>570</post_avblfldidx>
+       <shortname>GFS_TCDC_ON_CONVECTIVE_CLOUD_LYR</shortname>
+       <pname>TCDC</pname>
+       <fixed_sfc1_type>convective_cloud_lyr</fixed_sfc1_type>
+       <scale>3.0</scale>
+    </param>
+
+    <param>
        <post_avblfldidx>575</post_avblfldidx>
        <shortname>CWAT_ON_ENTIRE_ATMOS_SINGLE_LYR</shortname>
        <pname>CWAT</pname>
