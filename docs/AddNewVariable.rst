@@ -38,29 +38,29 @@ with examples in the sections below.
             `NCEP Grib2 Table <https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2.shtml>`_
             (Product Discipline and Parameter Category).
 
-            1)  If no (not available in the NCEP Grib2 Table)
+            I.  If no (not available in the NCEP Grib2 Table)
 
-                a)  NOAA users can email Boi.Vuong@noaa.gov with the following information for your new
+                a.  NOAA users can email Boi.Vuong@noaa.gov with the following information for your new
                     variable: variable definition, unit, and what Grib2 discipline and category you think this
                     variable should belong to. Boi will define your new variable in the `NCEP Grib2 Table
                     <https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2.shtml>`_ and
                     inform you of the Grib2 discipline and category numbers you should use.
 
-                b)  Contact with Boi to update parm/params_grib2_tbl_new.text with your new variable and
+                b.  Contact with Boi to update parm/params_grib2_tbl_new.text with your new variable and
                     generate a params_grib2_tbl_new which lists in alphabetical order to improve post
                     processing efficiency.
 
-                c)  Save new params_grib2_tbl_new.text and params_grib2_tbl_new under parm/ of your UPP
+                c.  Save new params_grib2_tbl_new.text and params_grib2_tbl_new under parm/ of your UPP
                     working version.
 
-                d)  Other users please coordinate through the DTC for the above three steps.
+                d.  Other users please coordinate through the DTC for the above three steps.
 
-                e)  Add a new entry in post_avblflds.xml with your new variable, then follow step B), then step 2)
+                e.  Add a new entry in post_avblflds.xml with your new variable, then follow step B), then step 2)
                     and beyond. You should assign a new UPP ID for your new variable.
 
-            2)  If yes (available in the NCEP Grib2 Table)
+            II. If yes (available in the NCEP Grib2 Table)
 
-                a)  Add a new entry in post_avblflds.xml with your new variable, then follow step B), then step 2)
+                a.  Add a new entry in post_avblflds.xml with your new variable, then follow step B), then step 2)
                     and beyond. You should assign a new UPP ID for your new variable.
 
     B.  If yes (available in post_avblflds.xml), then your new variable is already available in UPP. Follow the
