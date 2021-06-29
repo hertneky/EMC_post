@@ -197,7 +197,7 @@ with examples in the sections below.
                 ::
 
                  <param>
-                   <post_avblfldidx>979</post_avblfldidx>
+                   <post_avblfldidx>999</post_avblfldidx>
                    <shortname>DEEP_TSOIL_ON_DEPTH_BEL_LAND_SFC</shortname>
                    <pname>TG3</pname>
                    <fixed_sfc1_type>depth_bel_land_sfc</fixed_sfc1_type>
@@ -259,11 +259,14 @@ with examples in the sections below.
       http://www.nco.ncep.noaa.gov/pmb/docs/on388/table2.html
     - Use level type 'depth below land surface', which is 111.
       http://www.nco.ncep.noaa.gov/pmb/docs/on388/table3.html
+    - New variables are continuously being added to UPP, so be sure to check that the UPP Index 999 is
+      still available before using it to add your new variable. If it is already in use, pick the next
+      available Index.
     - Add as:
 
     ::
 
-     DATA IFILV(979),AVBL(979),IQ(979),IS(979),AVBLGRB2(979) &
+     DATA IFILV(999),AVBL(999),IQ(999),IS(999),AVBLGRB2(999) &
      &          /1,'DEEP SOIL TMP',085,111,                  &
      &          'DEEP TSOIL ON depth_bel_land_sfc'/
 
@@ -350,11 +353,11 @@ with examples in the sections below.
     ::
 
      ! DEEP SOIL TEMPERATURE
-     IF ( IGET(979).GT.0 ) THEN
+     IF ( IGET(999).GT.0 ) THEN
        ID(1:25) = 0
        If(grib=='grib2') then
          cfld=cfld+1
-         fld_info(cfld)%ifld=IAVBLFLD(IGET(979))
+         fld_info(cfld)%ifld=IAVBLFLD(IGET(999))
      !$omp parallel do private(i,j,jj)
          do j=1,jend-jsta+1
            jj = jsta+j-1
