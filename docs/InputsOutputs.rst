@@ -22,11 +22,10 @@ The UPP requires the following input files:
 ITAG
 ----
 
-The :bolditalic:`itag` namelist that is read in by :bolditalic:`ncep_post` from stdin (unit 5) is
+The :bolditalic:`itag` namelist that is read in by the :bolditalic:`upp.x` executable from stdin (unit 5) is
 generated automatically within the UFS application workflow or stand-alone run script based on
 user-defined options. It should not be necessary to edit this. For description purposes, the namelist
-(:bolditalic:`itag`) contains 7 lines for
-FV3:
+(:bolditalic:`itag`) contains 7 lines for FV3:
 
 #. Name of the FV3 (pressure level) output file to be posted.
 
@@ -37,7 +36,7 @@ FV3:
 #. Forecast valid time (not model start time) in YYYY-MM-DD_HH:00:00 format (the forecast time desired
    to be post-processed).
 
-#. Model used (GFS, FV3R - regional FV3; also the LAM - Limited Area Model).
+#. Model used (GFS, FV3R - regional FV3 also known as the LAM - Limited Area Model).
 
 #. Name of the FV3 (surface) output file to be post-processed.
 
@@ -142,7 +141,7 @@ file:
 Output Files
 ============
 
-Upon a successful run, :bolditalic:`ncep_post` will generate GRIB2 output files in the post-processor
+Upon a successful run, :bolditalic:`upp.x` will generate GRIB2 output files in the post-processor
 working directory. These files will include all fields that were requested in the control file.
 
 When running UPP stand-alone, the following Grib2 output files will be generated:
