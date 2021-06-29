@@ -115,13 +115,14 @@ with examples in the sections below.
 
 8. Build or rebuild the code for changes to take effect before running your UPP run script.
 
+
 **Example Procedure: Steps for adding a new variable ‘TG3’**
 
 - This example illustrates adding a new variable from GFS output that will be read into UPP
   and directly output into the Grib2 output files (i.e. in this case no additional computations/calculations
   are needed for the field).
 - Additions to each of the routines are highlighted. 
-- Locations of routines are in /EMC_post/sorc/ncep_post.fd unless specified otherwise.
+- Locations of routines are in EMC_post/sorc/ncep_post.fd unless specified otherwise.
 - Sample GFS files for the following procedures are available for download
   `here <https://dtcenter.org/sites/default/files/community-code/upp/AddNewVar_GFSdata.tar.gz>`_.
  - This data is the 6-hr forecast of a GFS initialization of 2020-02-04_00:00:00
@@ -148,7 +149,7 @@ with examples in the sections below.
 
          1) This variable is not defined in the NCEP Grib2 Table.
 
-            a) - d) For the purpose of this example alone, steps a) - d) are not executed as instructed.
+            a)-d) For the purpose of this example alone, steps a) - d) are not executed as instructed.
                Instead, manual instructions are provided here for adding to the params_grib2_table_new in order
                to create a working example. 
 
@@ -177,7 +178,7 @@ with examples in the sections below.
       
                 ::
 
-                2 0 231 1 TG3
+                 2 0 231 1 TG3
 
             e) Add the new variable to the EMC_post/parm/post_avblflds.xml, which lists all fields available
                for output in GRIB2 format. This file is generally not modified unless adding a new field or
@@ -195,15 +196,15 @@ with examples in the sections below.
       
                 ::
 
-                <param>
-                  <post_avblfldidx>979</post_avblfldidx>
-                  <shortname>DEEP_TSOIL_ON_DEPTH_BEL_LAND_SFC</shortname>
-                  <pname>TG3</pname>
-                  <fixed_sfc1_type>depth_bel_land_sfc</fixed_sfc1_type>
-                  <table_info>NCEP</table_info>
-                  <level>500.</level>
-                  <scale>3.0</scale>
-                </param>
+                 <param>
+                   <post_avblfldidx>979</post_avblfldidx>
+                   <shortname>DEEP_TSOIL_ON_DEPTH_BEL_LAND_SFC</shortname>
+                   <pname>TG3</pname>
+                   <fixed_sfc1_type>depth_bel_land_sfc</fixed_sfc1_type>
+                   <table_info>NCEP</table_info>
+                   <level>500.</level>
+                   <scale>3.0</scale>
+                 </param>
 
    B. Add the variable to the user defined control file.
 
@@ -216,15 +217,17 @@ with examples in the sections below.
 
           ::
 
-          <param>
-            <shortname>DEEP_TSOIL_ON_DEPTH_BEL_LAND_SFC</shortname>
-            <scale>4.0</scale>
-          </param>
+           <param>
+             <shortname>DEEP_TSOIL_ON_DEPTH_BEL_LAND_SFC</shortname>
+             <scale>4.0</scale>
+           </param>
 
       ii. Generate your_user_defined_flat file (e.g. postxconfig-NT-fv3lam.txt for FV3LAM application) by
           executing:
 
-          /usr/bin/perl PostXMLPreprocessor.pl your_user_defined_xml post_avblflds.xml your_user_defined_flat
+          ::
+
+           >> /usr/bin/perl PostXMLPreprocessor.pl your_user_defined_xml post_avblflds.xml your_user_defined_flat
 
           This flat file (instead of the xml file) is read in by UPP as it was much faster to read a text file
           than an xml file.
