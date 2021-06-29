@@ -147,8 +147,7 @@ working directory. These files will include all fields that were requested in th
 When running UPP stand-alone, the following Grib2 output files will be generated:
 
    | **GFS Model**: GFSPRS.HHH
-   | **LAM (Limited Area Model)**: BGDAWP.HHH (surface and other 2D fields) and BGRD3D.HHH (model level
-     fields)
+   | **LAM (Limited Area Model)**: NATLEV.HHH and PRSLEV.HHH
 
 When executed with the provided run script, UPP provides log files in the post-processor working directory named
 :bolditalic:`upp.fHHH.out`, where :bolditalic:`HHH` is the forecast hour. These log files may be consulted for further
